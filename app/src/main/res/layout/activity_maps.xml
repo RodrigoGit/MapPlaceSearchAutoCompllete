@@ -1,0 +1,53 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_weight="0.9"
+        android:layout_height="wrap_content">
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="fifteen.twigs.com.mapview2.MapsActivity" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:layout_margin="15dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/places_ic_search"/>
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:layout_height="42dp"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:textSize="16sp"
+                android:hint="Enter Place Here"/>
+            <Button android:id="@+id/button_clear"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/places_ic_clear"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <Button android:id="@+id/confirm_local_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:visibility="invisible"
+        android:background="@drawable/btn_confirm_local_place"
+        android:textAllCaps="false"
+        android:text="Confirm the place"/>
+</LinearLayout>

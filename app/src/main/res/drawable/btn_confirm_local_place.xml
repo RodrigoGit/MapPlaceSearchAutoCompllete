@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:drawable="@drawable/btn_confirme_local_place_bg"
+        android:id="@+id/t_bg" />
+    <item
+        android:top="0dp" android:left="100dp">
+        <bitmap android:src="@drawable/ic_location_on_black_24dp"
+            android:gravity="left" />
+    </item>
+</layer-list>
