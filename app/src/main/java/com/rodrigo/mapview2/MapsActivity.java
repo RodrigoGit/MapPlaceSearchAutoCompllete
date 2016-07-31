@@ -1,4 +1,4 @@
-package fifteen.twigs.com.mapview2;
+package com.rodrigo.mapview2;
 
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -67,20 +67,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .addOnConnectionFailedListener(this)
                 .addApi(AppIndex.API).build();
 
-        setContentView(com.twigs.com.mapview2.R.layout.activity_maps);
-        mAutocompleteView = (AutoCompleteTextView) findViewById(com.twigs.com.mapview2.R.id.autoCompleteTextView);
+        setContentView(R.layout.activity_maps);
+        mAutocompleteView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);
         mAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient, null, null);
         mAutocompleteView.setAdapter(mAdapter);
 
-        Button clearButton = (Button) findViewById(com.twigs.com.mapview2.R.id.button_clear);
+        Button clearButton = (Button) findViewById(R.id.button_clear);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAutocompleteView.setText("");
             }
         });
-        Button save = (Button) findViewById(com.twigs.com.mapview2.R.id.confirm_local_place);
+        Button save = (Button) findViewById(R.id.confirm_local_place);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         geo = new Geocoder(MapsActivity.this.getApplicationContext(), Locale.getDefault());
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.twigs.com.mapview2.R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 

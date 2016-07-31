@@ -1,4 +1,4 @@
-package fifteen.twigs.com.mapview2;
+package com.rodrigo.mapview2;
 
 import android.content.Context;
 import android.graphics.Typeface;

@@ -1,4 +1,4 @@
-package fifteen.twigs.com.mapview2;
+package com.rodrigo.mapview2;
 
 import org.junit.Test;
 
