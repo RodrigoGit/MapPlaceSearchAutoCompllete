@@ -50,7 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Address> addresses;
     private static int NVL_ZOOM_SEARCH = 20;
     private static int NVL_ZOOM_START = 14;
-    private static final LatLng SAO_PAULO = new LatLng(-23.3250, -46.3809);
+    private static final LatLng SAO_PAULO = new LatLng(-23.586950299999998, -46.682218999999996);
     private static final String COMMA = ",";
 
     @Override
@@ -104,7 +104,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setOnMarkerClickListener(event);
         mMap.setOnMarkerDragListener(eventDrag);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -130,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void markerDefault(){
         marker = mMap.addMarker(new MarkerOptions().position(SAO_PAULO).draggable(true));
-        this.settignsGoogleMapDefault();
+        this.settingsGoogleMapDefault();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SAO_PAULO, NVL_ZOOM_START));
     }
     private GoogleMap.OnMarkerDragListener eventDrag = new GoogleMap.OnMarkerDragListener() {
@@ -152,12 +151,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    };
-    private GoogleMap.OnMarkerClickListener event = new GoogleMap.OnMarkerClickListener() {
-        @Override
-        public boolean onMarkerClick(Marker marker) {
-            return false;
         }
     };
 
@@ -210,7 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     };
 
-
+    @Override
     public void onConnected(Bundle connectionHint) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
@@ -222,29 +215,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng myLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                 marker = mMap.addMarker(new MarkerOptions().position(myLocation).draggable(true));
                 this.configureMarker(myLocation,NVL_ZOOM_START);
-                this.settignsGoogleMapDefault();
+                this.settingsGoogleMapDefault();
             } else {
                 this.markerDefault();
             }
         }
 
-    }
-
-    private void settignsGoogleMapDefault(){
-        mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-    }
-
-    private void configureMarker(LatLng latLng , int nvlZoom){
-        try {
-            addresses = geo.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            marker.setTitle(MapsActivity.this.formatLocalityAutoComplete(addresses.get(0).getLocality(),addresses.get(0).getSubLocality()));
-            marker.setSnippet(MapsActivity.this.formatAddressAutoComplete(addresses.get(0).getThoroughfare(),addresses.get(0).getSubThoroughfare()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, nvlZoom));
-            marker.showInfoWindow();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     @Override
     public void onConnectionSuspended(int i) {
@@ -253,4 +229,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         this.markerDefault();
     }
+
+    private void settingsGoogleMapDefault(){
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+    }
+
+    private void configureMarker(LatLng latLng , int nvlZoom){
+        try {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, nvlZoom));
+            addresses = geo.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            marker.setTitle(MapsActivity.this.formatLocalityAutoComplete(addresses.get(0).getLocality(),addresses.get(0).getSubLocality()));
+            marker.setSnippet(MapsActivity.this.formatAddressAutoComplete(addresses.get(0).getThoroughfare(),addresses.get(0).getSubThoroughfare()));
+            marker.showInfoWindow();
+        } catch (IOException e) {
+        }
+    }
+
 }
