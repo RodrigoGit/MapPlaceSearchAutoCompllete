@@ -6,7 +6,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="0.9"
         android:layout_height="wrap_content">
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -35,7 +35,7 @@
                 android:layout_height="42dp"
                 android:background="@android:color/transparent"
                 android:textSize="16sp"
-                android:hint="Enter Place Here"/>
+                android:hint="@string/enter_place"/>
             <Button android:id="@+id/button_clear"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -46,7 +46,7 @@
     </RelativeLayout>
     <Button android:id="@+id/confirm_local_place"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="50dp"
         android:background="@drawable/btn_confirm_local_place"
         android:textAllCaps="false"
         android:text="@string/place_confirm"/>

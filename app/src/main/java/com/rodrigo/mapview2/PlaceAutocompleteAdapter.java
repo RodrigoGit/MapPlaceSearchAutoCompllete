@@ -92,7 +92,6 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
      */
     @Override
     public AutocompletePrediction getItem(int position) {
-        Log.i(">>>> ",mResultList.size() + " - " + position);
         if(position == mResultList.size()){
             position = position -1;
         }
