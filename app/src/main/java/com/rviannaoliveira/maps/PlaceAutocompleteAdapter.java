@@ -1,4 +1,4 @@
-package com.rodrigo.mapview2;
+package com.rviannaoliveira.maps;
 
 import android.content.Context;
 import android.graphics.Typeface;

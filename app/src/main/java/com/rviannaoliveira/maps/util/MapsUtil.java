@@ -1,4 +1,4 @@
-package com.rodrigo.mapview2.util;
+package com.rviannaoliveira.maps.util;
 
 /**
  * Created by rodrigo on 04/08/16.

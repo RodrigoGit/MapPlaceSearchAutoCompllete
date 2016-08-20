@@ -1,10 +1,9 @@
-package com.rodrigo.mapview2;
+package com.rviannaoliveira.maps;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Button;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -13,6 +12,7 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by rodrigo on 30/07/16.
@@ -20,6 +20,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private GoogleApiClient mGoogleApiClient;
     private MapsPresenterImpl mapsPresenterImpl;
+    public static final LatLng SAO_PAULO = new LatLng(-23.586950299999998, -46.682218999999996);
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

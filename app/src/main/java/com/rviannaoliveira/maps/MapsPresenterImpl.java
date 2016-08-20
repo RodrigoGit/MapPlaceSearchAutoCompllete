@@ -1,9 +1,12 @@
-package com.rodrigo.mapview2;
+package com.rviannaoliveira.maps;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -24,7 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.rodrigo.mapview2.util.MapsUtil;
+import com.rviannaoliveira.maps.util.MapsUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +44,6 @@ class MapsPresenterImpl implements MapsPresenter {
     private List<Address> addresses;
     private AutoCompleteTextView mAutocompleteView;
     private PlaceAutocompleteAdapter mAdapter;
-    private static final LatLng SAO_PAULO = new LatLng(-23.586950299999998, -46.682218999999996);
     private MapsActivity context;
     private Marker marker;
 
@@ -94,7 +96,13 @@ class MapsPresenterImpl implements MapsPresenter {
 
     @Override
     public void request() {
-        Log.i(TAG+"position",marker.getPosition().toString());
+        Intent mIntent = new Intent();
+        Bundle mBundle = new Bundle();
+        mBundle.putString(MapsActivity.LATITUDE, String.valueOf(marker.getPosition().latitude));
+        mBundle.putString(MapsActivity.LONGITUDE, String.valueOf(marker.getPosition().longitude));
+        mIntent.putExtras(mBundle);
+        context.setResult(Activity.RESULT_OK, mIntent);
+        context.finish();
     }
 
     private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
@@ -150,9 +158,9 @@ class MapsPresenterImpl implements MapsPresenter {
     }
 
     void markerDefault(){
-        marker = mMap.addMarker(new MarkerOptions().position(SAO_PAULO).draggable(true));
+        marker = mMap.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
         this.settingsGoogleMapDefault();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SAO_PAULO, context.getResources().getInteger(R.integer.nvl_zoom_start)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, context.getResources().getInteger(R.integer.nvl_zoom_start)));
     }
 
     public View.OnClickListener eventClearSearch = new View.OnClickListener() {

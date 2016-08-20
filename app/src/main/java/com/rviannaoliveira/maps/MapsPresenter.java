@@ -1,4 +1,4 @@
-package com.rodrigo.mapview2;
+package com.rviannaoliveira.maps;
 
 import com.google.android.gms.maps.GoogleMap;
 

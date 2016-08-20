@@ -1,4 +1,4 @@
-package com.rodrigo.mapview2;
+package com.rviannaoliveira.maps;
 
 import org.junit.Test;
 
