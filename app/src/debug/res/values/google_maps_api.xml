@@ -7,7 +7,7 @@
     https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=52:25:5E:20:C4:C7:14:8E:B7:71:D4:DA:AB:5E:AB:EC:03:9C:42:F5%3Bfifteen.twigs.com.mapview2
 
     You can also add your credentials to an existing key, using this line:
-    52:25:5E:20:C4:C7:14:8E:B7:71:D4:DA:AB:5E:AB:EC:03:9C:42:F5;fifteen.twigs.com.mapview2
+    52:25:5E:20:C4:C7:14:8E:B7:71:D4:DA:AB:5E:AB:EC:03:9C:42:F5;
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key
