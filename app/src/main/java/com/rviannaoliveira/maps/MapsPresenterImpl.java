@@ -6,14 +6,17 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -86,7 +89,7 @@ class MapsPresenterImpl implements MapsPresenter {
             if (mLastLocation != null) {
                 LatLng myLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                 marker = mMap.addMarker(new MarkerOptions().position(myLocation).draggable(true));
-                this.configureMarker(myLocation,context.getResources().getInteger(R.integer.nvl_zoom_start));
+                this.configureMarker(myLocation, context.getResources().getInteger(R.integer.nvl_zoom_start));
                 this.settingsGoogleMapDefault();
             } else {
                 this.markerDefault();
@@ -103,6 +106,24 @@ class MapsPresenterImpl implements MapsPresenter {
         mIntent.putExtras(mBundle);
         context.setResult(Activity.RESULT_OK, mIntent);
         context.finish();
+    }
+
+    @Override
+    public void locationButton() {
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission
+                .ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
+                .checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        mMap.setMyLocationEnabled(true);
+        View locationButton = ((View) context.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        rlp.setMargins(0, 250, 180, 0);
+        locationButton.setLayoutParams(rlp);
     }
 
     private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
@@ -143,6 +164,7 @@ class MapsPresenterImpl implements MapsPresenter {
     private void settingsGoogleMapDefault(){
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        locationButton();
     }
 
     private void configureMarker(LatLng latLng , int nvlZoom){
@@ -158,18 +180,20 @@ class MapsPresenterImpl implements MapsPresenter {
     }
 
     void markerDefault(){
-        marker = mMap.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
-        this.settingsGoogleMapDefault();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, context.getResources().getInteger(R.integer.nvl_zoom_start)));
+        if(mMap != null){
+            marker = mMap.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
+            this.settingsGoogleMapDefault();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, context.getResources().getInteger(R.integer.nvl_zoom_start)));
+        }
     }
 
-    public View.OnClickListener eventClearSearch = new View.OnClickListener() {
+    private View.OnClickListener eventClearSearch = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             mAutocompleteView.setText("");
         }
     };
-    public View.OnClickListener eventSave = new View.OnClickListener() {
+    private View.OnClickListener eventSave = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             MapsPresenterImpl.this.request();

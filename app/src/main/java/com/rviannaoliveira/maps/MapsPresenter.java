@@ -11,4 +11,5 @@ interface MapsPresenter {
     void onMapReady(GoogleMap googleMap);
     void onConnected();
     void request();
+    void locationButton();
 }
