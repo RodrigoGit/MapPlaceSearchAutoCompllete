@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'maven'
 android {
     compileSdkVersion 24
@@ -7,10 +7,10 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
-        applicationId "com.rviannaoliveira.maps"
+       / applicationId "com.rviannaoliveira.maps"
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled false
+        multiDexEnabled false/
     }
     buildTypes {
         release {
