@@ -1,4 +1,4 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 apply plugin: 'maven'
 android {
     compileSdkVersion 24
@@ -7,10 +7,10 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
-       / applicationId "com.rviannaoliveira.maps"
+        applicationId "com.rviannaoliveira.maps"
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled false/
+        multiDexEnabled false
     }
     buildTypes {
         release {
@@ -39,6 +39,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.google.android.gms:play-services:9.0.0'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
+    compile 'com.google.android.gms:play-services-places:10.0.1'
+    compile 'com.google.android.gms:play-services-location:10.0.1'
     testCompile 'junit:junit:4.12'
 }
