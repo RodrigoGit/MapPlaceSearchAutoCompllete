@@ -64,12 +64,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                                              .enableAutoManage(this, 0, null)
-                                              .addApi(Places.GEO_DATA_API)
-                                              .addApi(LocationServices.API)
-                                              .addConnectionCallbacks(this)
-                                              .addOnConnectionFailedListener(this)
-                                              .build();
+                .enableAutoManage(this, 0, null)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
 
         mAutocompleteView = (AutoCompleteTextView) this.findViewById(R.id.autoCompleteTextView);
         mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);
@@ -85,9 +85,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         if (Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MARKER_COARSE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MARKER_COARSE);
         }
     }
 
@@ -116,17 +116,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerDragListener(eventDrag);
+        mMap.setOnInfoWindowClickListener(eventSaveMarker);
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             this.markerDefault();
         }
     }
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
             return;
         }
         if (marker == null) {
@@ -157,9 +158,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MARKER_COARSE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission
                     .ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat
-                    .checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                    .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
@@ -198,15 +199,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private View.OnClickListener eventSave = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent mIntent = new Intent();
-            Bundle mBundle = new Bundle();
-            mBundle.putString(MapsActivity.LATITUDE, String.valueOf(marker.getPosition().latitude));
-            mBundle.putString(MapsActivity.LONGITUDE, String.valueOf(marker.getPosition().longitude));
-            mIntent.putExtras(mBundle);
-            setResult(Activity.RESULT_OK, mIntent);
-            finish();
+            save();
         }
     };
+    private GoogleMap.OnInfoWindowClickListener eventSaveMarker = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            save();
+        }
+    };
+
     private void configureMarker(LatLng latLng , int nvlZoom){
         try {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, nvlZoom));
@@ -230,20 +232,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void settingsGoogleMapDefault(){
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setOnMyLocationChangeListener(eventMyLocationChangeListener);
         locationButton();
     }
 
-    private GoogleMap.OnMyLocationChangeListener eventMyLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
-        @Override
-        public void onMyLocationChange(Location location) {
-            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-            marker = mMap.addMarker(new MarkerOptions().position(loc));
-            if(mMap != null){
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
-            }
-        }
-    };
     private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -279,9 +270,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     };
 
 
-    public void locationButton() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+    void locationButton() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
@@ -292,5 +283,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
         rlp.setMargins(0, 250, 180, 0);
         locationButton.setLayoutParams(rlp);
+    }
+
+    private void save(){
+        Intent mIntent = new Intent();
+        Bundle mBundle = new Bundle();
+        mBundle.putString(MapsActivity.LATITUDE, String.valueOf(marker.getPosition().latitude));
+        mBundle.putString(MapsActivity.LONGITUDE, String.valueOf(marker.getPosition().longitude));
+        mIntent.putExtras(mBundle);
+        setResult(Activity.RESULT_OK, mIntent);
+        finish();
     }
 }
