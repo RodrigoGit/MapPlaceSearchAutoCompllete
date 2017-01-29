@@ -2,6 +2,7 @@ package com.rviannaoliveira.maps;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -35,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * The API client must be maintained in the encapsulating Activity, including all lifecycle and
  * connection states. The API client must be connected with the {@link Places#GEO_DATA_API} API.
  */
-public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
+class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
 
     private static final String TAG = "PlaceAutocompleteAdapter";
     private static final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.BOLD);
@@ -64,8 +65,8 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
      *
      * @see android.widget.ArrayAdapter#ArrayAdapter(android.content.Context, int)
      */
-    public PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient,
-                                    LatLngBounds bounds, AutocompleteFilter filter) {
+    PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient,
+                             LatLngBounds bounds, AutocompleteFilter filter) {
         super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
         mGoogleApiClient = googleApiClient;
         mBounds = bounds;
@@ -98,8 +99,9 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
         return mResultList.get(position);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View row = super.getView(position, convertView, parent);
 
         // Sets the primary and secondary text for a row.
@@ -110,8 +112,10 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
 
         TextView textView1 = (TextView) row.findViewById(android.R.id.text1);
         TextView textView2 = (TextView) row.findViewById(android.R.id.text2);
-        textView1.setText(item.getPrimaryText(STYLE_BOLD));
-        textView2.setText(item.getSecondaryText(STYLE_BOLD));
+        if (item != null) {
+            textView1.setText(item.getPrimaryText(STYLE_BOLD));
+            textView2.setText(item.getSecondaryText(STYLE_BOLD));
+        }
 
         return row;
     }
@@ -119,6 +123,7 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     /**
      * Returns the filter for the current set of autocomplete results.
      */
+    @NonNull
     @Override
     public Filter getFilter() {
         return new Filter() {
