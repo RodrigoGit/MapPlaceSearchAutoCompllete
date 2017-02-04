@@ -209,6 +209,11 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
         rlp.setMargins(0, 250, 180, 0);
         locationButton.setLayoutParams(rlp);
+        Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+        this.getMarker().remove();
+        this.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,this.getResources().getInteger(R.integer.nvl_zoom_start)));
     }
 
     void save(){

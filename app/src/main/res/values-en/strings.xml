@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">VMapView</string>
     <string name="title_activity_maps">Map</string> <string name="autocomplete_hint">Enter place name or address</string>
-    <string name="selected_place">Último lugar selecionado:</string>
-    <string name="clear_text">Limpar texto</string>
-    <string name="place_confirm">Confirmar local</string>
-    <string name="enter_place">Digite um lugar aqui</string>
+    <string name="selected_place">Last Selected Place:</string>
+    <string name="clear_text">Clear Text</string>
+    <string name="place_confirm">Confirm a place</string>
+    <string name="enter_place">Enter place here</string>
     <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Place Id: %2$s&lt;/i&gt;&lt;br/&gt;Address: %3$s&lt;br/&gt;Phone: %4$s&lt;br/&gt;Website: %5$s</string>
 </resources>

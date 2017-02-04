@@ -1,13 +1,13 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'maven'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
     defaultConfig {
+//        applicationId "com.rviannaoliveira.maps"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
-        applicationId "com.rviannaoliveira.maps"
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled false
@@ -22,7 +22,7 @@ android {
     uploadArchives {
         repositories {
             mavenDeployer {
-                repository(url: "file:///Users/rodrigo/rep/gradleLibray")
+                repository(url: "file:///Users/rodrigo/rep/gradleLibray/map")
 
                 pom.groupId = GROUP
                 pom.artifactId = POM_ARTIFACT_ID
