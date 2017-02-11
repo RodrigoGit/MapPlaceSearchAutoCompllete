@@ -26,7 +26,7 @@ class MapsPresenterImpl implements MapsPresenter {
             mapsView.markerLastLocation(lastLocation);
             mapsView.settingsGoogleMapDefault();
         } else {
-            mapsView.markerDefault();
+            mapsView.createMapDefault();
         }
     }
 }

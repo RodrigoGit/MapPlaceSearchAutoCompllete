@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
 interface MapsView {
     void setupMap();
     void setupView();
-    void markerDefault();
+    void createMapDefault();
     void markerLastLocation(Location myLocation);
     void configureMarker(LatLng latLngCurrent, int integer);
     void settingsGoogleMapDefault();

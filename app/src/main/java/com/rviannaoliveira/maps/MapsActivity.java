@@ -89,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            this.markerDefault();
+            this.createMapDefault();
         }
         autocompleteView.setOnItemClickListener(viewEventHelper.autocompleteClickListener(adapter, mapsHelper,autocompleteView,googleApiClient));
     }
@@ -141,7 +141,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        this.markerDefault();
+        this.createMapDefault();
     }
 
     @Override
@@ -166,12 +166,16 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     }
 
     @Override
-    public void markerDefault(){
+    public void createMapDefault(){
         if(map != null){
-            marker = map.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
             this.settingsGoogleMapDefault();
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, this.getResources().getInteger(R.integer.nvl_zoom_start)));
+            this.markerDefault();
         }
+    }
+
+    private void markerDefault() {
+        marker = map.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, this.getResources().getInteger(R.integer.nvl_zoom_start)));
     }
 
     @Override
@@ -210,10 +214,16 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
         rlp.setMargins(0, 250, 180, 0);
         locationButton.setLayoutParams(rlp);
         Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-        this.getMarker().remove();
-        this.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,this.getResources().getInteger(R.integer.nvl_zoom_start)));
+        LatLng latLng;
+
+        if(currentLocation != null){
+            latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+            this.getMarker().remove();
+            this.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
+            configureMarker(latLng,this.getResources().getInteger(R.integer.nvl_zoom_start));
+        }else{
+            markerDefault();
+        }
     }
 
     void save(){

@@ -1,6 +1,7 @@
 package com.rviannaoliveira.maps;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -35,13 +37,22 @@ public class MapsUtil {
         }
         return primaryText.concat(COMMA).concat(secondaryText.substring(0, secondaryText.indexOf(",")));
     }
-    static String formatLocalityAutoComplete(String locality, String subLocality) {
+    public static String formatLocalityAutoComplete(String locality, String subLocality) {
         String local    = locality    != null ? locality:"";
         String subLocal = subLocality != null ? subLocality:"";
         return local.concat(" - ").concat(subLocal);
     }
 
-    static void permissionLocationNear(MapsActivity content) {
+
+    public static void permissionLocationNear(Activity content) {
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(content, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(content, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(content, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MapsActivity.MARKER_COARSE);
+        }
+    }
+
+    public static void permissionLocationNear(AppCompatActivity content) {
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(content, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(content, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
