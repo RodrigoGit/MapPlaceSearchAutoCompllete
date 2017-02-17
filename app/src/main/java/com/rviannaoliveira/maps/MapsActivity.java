@@ -176,6 +176,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     private void markerDefault() {
         marker = map.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, this.getResources().getInteger(R.integer.nvl_zoom_start)));
+        marker.setDraggable(true);
     }
 
     @Override
@@ -220,6 +221,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
             latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
             this.getMarker().remove();
             this.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
+            marker.setDraggable(true);
             configureMarker(latLng,this.getResources().getInteger(R.integer.nvl_zoom_start));
         }else{
             markerDefault();
