@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -56,6 +57,12 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        if(!MapsUtil.isNetworkAvailable(this)){
+            Toast.makeText(this, R.string.error_connection, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         presenter = new MapsPresenterImpl(this);
         viewEventHelper = new ViewEventHelper(this);
         presenter.setup();
@@ -72,7 +79,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
 
     @Override
     public void onStop() {
-        if (googleApiClient.isConnected()) {
+        if (googleApiClient != null && googleApiClient.isConnected()) {
             googleApiClient.disconnect();
         }
         super.onStop();

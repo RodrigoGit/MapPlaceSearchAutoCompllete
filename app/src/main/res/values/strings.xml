@@ -6,4 +6,5 @@
     <string name="place_confirm">Confirmar local</string>
     <string name="enter_place">Digite um lugar aqui</string>
     <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Place Id: %2$s&lt;/i&gt;&lt;br/&gt;Address: %3$s&lt;br/&gt;Phone: %4$s&lt;br/&gt;Website: %5$s</string>
+    <string name="error_connection">Existe um problema com a sua conexão</string>
 </resources>

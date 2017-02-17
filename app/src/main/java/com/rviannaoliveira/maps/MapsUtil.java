@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -90,6 +92,12 @@ public class MapsUtil {
         double latitude  = Double.parseDouble(String.valueOf(bundle.get(MapsActivity.LATITUDE)));
         double longitude = Double.parseDouble(String.valueOf(bundle.get(MapsActivity.LONGITUDE)));
         return  new LatLng(latitude,longitude);
+    }
+
+    static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }
