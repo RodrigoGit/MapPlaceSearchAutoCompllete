@@ -39,12 +39,12 @@ import java.util.Locale;
  * Criado por rodrigo on 30/07/16.
  */
 public class MapsActivity extends FragmentActivity implements MapsView,OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    private GoogleApiClient googleApiClient;
     public static final LatLng SAO_PAULO = new LatLng(-23.586950299999998, -46.682218999999996);
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final int MARKER_COARSE = 123;
     private static final String TAG = ">>>>>>";
+    private GoogleApiClient googleApiClient;
     private Geocoder geo;
     private GoogleMap map;
     private AutoCompleteTextView autocompleteView;
@@ -183,7 +183,6 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     private void markerDefault() {
         marker = map.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, this.getResources().getInteger(R.integer.nvl_zoom_start)));
-        marker.setDraggable(true);
     }
 
     @Override
@@ -230,8 +229,6 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
             this.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
             marker.setDraggable(true);
             configureMarker(latLng,this.getResources().getInteger(R.integer.nvl_zoom_start));
-        }else{
-            markerDefault();
         }
     }
 
