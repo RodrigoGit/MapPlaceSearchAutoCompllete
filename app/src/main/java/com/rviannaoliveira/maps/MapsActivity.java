@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -52,13 +53,16 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     private Marker marker;
     private ViewEventHelper viewEventHelper;
     private MapsPresenter presenter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        progressBar = (ProgressBar) this.findViewById(R.id.progressbar_maps_lib);
 
         if(!MapsUtil.isNetworkAvailable(this)){
+            progressBar.setVisibility(View.GONE);
             Toast.makeText(this, R.string.error_connection, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -145,10 +149,12 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     }
     @Override
     public void onConnectionSuspended(int i) {
+        progressBar.setVisibility(View.GONE);
     }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         this.createMapDefault();
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -230,6 +236,8 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
             marker.setDraggable(true);
             configureMarker(latLng,this.getResources().getInteger(R.integer.nvl_zoom_start));
         }
+        progressBar.setVisibility(View.GONE);
+
     }
 
     void save(){
