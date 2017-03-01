@@ -243,6 +243,10 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     void save(){
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
+        if (marker == null || marker.getPosition() == null) {
+            Toast.makeText(this, this.getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
+            return;
+        }
         bundle.putString(MapsActivity.LATITUDE, String.valueOf(marker.getPosition().latitude));
         bundle.putString(MapsActivity.LONGITUDE, String.valueOf(marker.getPosition().longitude));
         intent.putExtras(bundle);
