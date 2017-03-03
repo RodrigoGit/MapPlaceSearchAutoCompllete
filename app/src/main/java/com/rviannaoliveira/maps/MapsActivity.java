@@ -43,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     public static final LatLng SAO_PAULO = new LatLng(-23.586950299999998, -46.682218999999996);
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
+    public static final String ADDRESS_STRING = "addressString";
     public static final int MARKER_COARSE = 123;
     private static final String TAG = ">>>>>>";
     private GoogleApiClient googleApiClient;
@@ -54,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     private ViewEventHelper viewEventHelper;
     private MapsPresenter presenter;
     private ProgressBar progressBar;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
             return;
         }
 
+        bundle = getIntent().getExtras();
         presenter = new MapsPresenterImpl(this);
         viewEventHelper = new ViewEventHelper(this);
         presenter.setup();
@@ -123,6 +126,11 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     @Override
     public void setupView() {
         autocompleteView = (AutoCompleteTextView) this.findViewById(R.id.autoCompleteTextView);
+
+        if (bundle != null) {
+            autocompleteView.setText(bundle.getString(ADDRESS_STRING));
+        }
+
         adapter = new PlaceAutocompleteAdapter(this, googleApiClient, null, null);
         autocompleteView.setAdapter(adapter);
         Button clearButton = (Button) this.findViewById(R.id.button_clear);
@@ -187,8 +195,10 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     }
 
     private void markerDefault() {
-        marker = map.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, this.getResources().getInteger(R.integer.nvl_zoom_start)));
+        if (bundle == null) {
+            marker = map.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, this.getResources().getInteger(R.integer.nvl_zoom_start)));
+        }
     }
 
     @Override
@@ -227,17 +237,30 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
         rlp.setMargins(0, 250, 180, 0);
         locationButton.setLayoutParams(rlp);
         Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        LatLng latLng;
+        this.setMarkerLocation(currentLocation);
 
-        if(currentLocation != null){
-            latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-            this.getMarker().remove();
-            this.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
-            marker.setDraggable(true);
-            configureMarker(latLng,this.getResources().getInteger(R.integer.nvl_zoom_start));
-        }
         progressBar.setVisibility(View.GONE);
 
+    }
+
+    private void setMarkerLocation(Location currentLocation) {
+        LatLng latLng = null;
+
+        if (bundle != null && bundle.getDouble(LATITUDE) != 0 && bundle.getDouble(LONGITUDE) != 0) {
+            latLng = new LatLng(bundle.getDouble(LATITUDE), bundle.getDouble(LONGITUDE));
+        }
+        if (currentLocation != null && latLng == null) {
+            latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+        }
+
+        if (latLng != null) {
+            if (marker != null) {
+                marker.remove();
+            }
+            this.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
+            marker.setDraggable(true);
+            configureMarker(latLng, this.getResources().getInteger(R.integer.nvl_zoom_start));
+        }
     }
 
     void save(){
