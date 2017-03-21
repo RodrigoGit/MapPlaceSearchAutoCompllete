@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.rviannaoliveira.maps">
+    package="com.rviannaoliveira.maps"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -40,4 +41,6 @@ App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. 
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
     </application>-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 </manifest>

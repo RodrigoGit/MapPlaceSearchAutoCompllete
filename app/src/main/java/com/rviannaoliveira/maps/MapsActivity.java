@@ -96,8 +96,8 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     public void onMapReady(GoogleMap googleMap) {
         MapsEventHelper mapsHelper = new MapsEventHelper(this, googleMap);
         map = googleMap;
-        map.setOnMarkerDragListener(mapsHelper.eventDrag);
         map.setOnInfoWindowClickListener(mapsHelper.eventSaveMarker);
+        map.setOnMapLongClickListener(mapsHelper.eventOnLongClick);
         map.setOnMyLocationChangeListener(mapsHelper.myLocationChangeListener);
         map.setOnMyLocationButtonClickListener(mapsHelper.eventMyLocationButton);
 

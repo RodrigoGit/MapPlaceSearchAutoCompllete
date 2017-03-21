@@ -55,20 +55,12 @@ class MapsEventHelper {
     };
 
 
-    GoogleMap.OnMarkerDragListener eventDrag = new GoogleMap.OnMarkerDragListener() {
+    GoogleMap.OnMapLongClickListener eventOnLongClick = new GoogleMap.OnMapLongClickListener() {
         @Override
-        public void onMarkerDragStart(Marker marker) {
-            marker.hideInfoWindow();
-        }
-
-        @Override
-        public void onMarkerDrag(Marker marker) {
-        }
-
-        @Override
-        public void onMarkerDragEnd(Marker marker) {
-            LatLng latLngCurrent = marker.getPosition();
-            context.configureMarker(latLngCurrent, context.getResources().getInteger(R.integer.nvl_zoom_search));
+        public void onMapLongClick(LatLng latLng) {
+            context.getMarker().remove();
+            context.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
+            context.configureMarker(latLng, context.getResources().getInteger(R.integer.nvl_zoom_search));
         }
     };
 
