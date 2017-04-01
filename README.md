@@ -39,7 +39,7 @@ or you can pass latitude and longitude to open with marker already
 map.putExtra(MapsActivity.LATITUDE, latLng.latitude);
 map.putExtra(MapsActivity.LONGITUDE, latLng.longitude);
 ```
-then you need to call Activity with result
+then you need to call Activity or Fragment with result
 
 ```java
 this.startActivityForResult(map, RESULT_MAP); //Activity 
