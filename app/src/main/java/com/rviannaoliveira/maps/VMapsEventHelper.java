@@ -16,24 +16,41 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Criado por rodrigo on 29/01/17.
  */
 
-class MapsEventHelper {
-    private MapsActivity context;
-    private GoogleMap map;
-    private boolean myLocation;
-
-    MapsEventHelper(MapsActivity mapsActivity, GoogleMap googleMap) {
-        this.context = mapsActivity;
-        this.map = googleMap;
-    }
-
-
+class VMapsEventHelper {
+    private VMapsActivity context;
     GoogleMap.OnInfoWindowClickListener eventSaveMarker =  new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 context.save();
             }
     };
-
+    ResultCallback<PlaceBuffer> updatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(@NonNull PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.e("Place query: ", places.getStatus().toString());
+                places.release();
+                return;
+            }
+            final Place place = places.get(0);
+            LatLng latLng = place.getLatLng();
+            context.getMarker().setPosition(latLng);
+            context.getMarker().setDraggable(true);
+            context.getMarker().hideInfoWindow();
+            context.configureMarker(latLng, context.getResources().getInteger(R.integer.nvl_zoom_start));
+            places.release();
+        }
+    };
+    private GoogleMap map;
+    GoogleMap.OnMapLongClickListener eventOnLongClick = new GoogleMap.OnMapLongClickListener() {
+        @Override
+        public void onMapLongClick(LatLng latLng) {
+            context.getMarker().remove();
+            context.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
+            context.configureMarker(latLng, context.getResources().getInteger(R.integer.nvl_zoom_search));
+        }
+    };
+    private boolean myLocation;
     GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
@@ -45,7 +62,6 @@ class MapsEventHelper {
                 }
             }
         };
-
     GoogleMap.OnMyLocationButtonClickListener eventMyLocationButton = new GoogleMap.OnMyLocationButtonClickListener() {
         @Override
         public boolean onMyLocationButtonClick() {
@@ -54,32 +70,9 @@ class MapsEventHelper {
         }
     };
 
-
-    GoogleMap.OnMapLongClickListener eventOnLongClick = new GoogleMap.OnMapLongClickListener() {
-        @Override
-        public void onMapLongClick(LatLng latLng) {
-            context.getMarker().remove();
-            context.setMarker(map.addMarker(new MarkerOptions().position(latLng)));
-            context.configureMarker(latLng, context.getResources().getInteger(R.integer.nvl_zoom_search));
-        }
-    };
-
-    ResultCallback<PlaceBuffer> updatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
-        @Override
-        public void onResult(@NonNull PlaceBuffer places) {
-            if (!places.getStatus().isSuccess()) {
-                Log.e("Place query did not complete. Error: ",places.getStatus().toString());
-                places.release();
-                return;
-            }
-            final Place place = places.get(0);
-            LatLng latLng = place.getLatLng();
-            context.getMarker().setPosition(latLng);
-            context.getMarker().setDraggable(true);
-            context.getMarker().hideInfoWindow();
-            context.configureMarker(latLng,context.getResources().getInteger(R.integer.nvl_zoom_start));
-            places.release();
-        }
-    };
+    VMapsEventHelper(VMapsActivity mapsActivity, GoogleMap googleMap) {
+        this.context = mapsActivity;
+        this.map = googleMap;
+    }
 
 }

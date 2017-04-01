@@ -13,15 +13,21 @@ import com.google.android.gms.location.places.Places;
 /**
  * Criado por rodrigo on 29/01/17.
  */
-class ViewEventHelper {
+class VViewEventHelper {
 
-    private final MapsActivity context;
+    private final VMapsActivity context;
+    View.OnClickListener eventSave = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            context.save();
+        }
+    };
 
-    ViewEventHelper(MapsActivity context){
+    VViewEventHelper(VMapsActivity context) {
         this.context = context;
     }
 
-    AdapterView.OnItemClickListener autocompleteClickListener(final PlaceAutocompleteAdapter adapter, final MapsEventHelper mapsHelper,
+    AdapterView.OnItemClickListener autocompleteClickListener(final VPlaceAutocompleteAdapter adapter, final VMapsEventHelper mapsHelper,
                                                               final AutoCompleteTextView autoCompleteTextView, final GoogleApiClient googleApiClient){
         return new AdapterView.OnItemClickListener() {
             @Override
@@ -34,12 +40,11 @@ class ViewEventHelper {
 
                     PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(googleApiClient, placeId);
                     placeResult.setResultCallback(mapsHelper.updatePlaceDetailsCallback);
-                    autoCompleteTextView.setText( MapsUtil.formatAddressAutoComplete(primaryText.toString(), secondaryText.toString()));
+                    autoCompleteTextView.setText(VMapsUtil.formatAddressAutoComplete(primaryText.toString(), secondaryText.toString()));
                 }
             }
         };
     }
-
 
     View.OnClickListener eventClearSearch (final AutoCompleteTextView autoCompleteTextView) {
         return new View.OnClickListener() {
@@ -49,12 +54,5 @@ class ViewEventHelper {
             }
         };
     }
-
-    View.OnClickListener eventSave =  new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            context.save();
-        }
-    };
 
 }

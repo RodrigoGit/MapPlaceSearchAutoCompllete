@@ -26,10 +26,19 @@ import java.util.Locale;
 
 
 @SuppressWarnings("WeakerAccess")
-public class MapsUtil {
+public class VMapsUtil {
     private static final String COMMA = ",";
 
-    private MapsUtil(){}
+    private VMapsUtil() {
+    }
+
+    /**
+     * Fomart with comma
+     *
+     * @param primaryText
+     * @param secondaryText
+     * @return
+     */
     public static String formatAddressAutoComplete(String primaryText, String secondaryText) {
         if (secondaryText == null) {
             return primaryText;
@@ -39,32 +48,54 @@ public class MapsUtil {
         }
         return primaryText.concat(COMMA).concat(secondaryText.substring(0, secondaryText.indexOf(",")));
     }
+
+    /**
+     * Format with hifen
+     *
+     * @param locality
+     * @param subLocality
+     * @return
+     */
     public static String formatLocalityAutoComplete(String locality, String subLocality) {
         String local    = locality    != null ? locality:"";
         String subLocal = subLocality != null ? subLocality:"";
         return local.concat(" - ").concat(subLocal);
     }
 
-
+    /**
+     * Permission Location Near with Activity
+     * @param content
+     */
     public static void permissionLocationNear(Activity content) {
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(content, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(content, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(content, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MapsActivity.MARKER_COARSE);
+            ActivityCompat.requestPermissions(content, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, VMapsActivity.MARKER_COARSE);
         }
     }
 
+    /**
+     * Permission location near with AppCompatActivity
+     * @param content
+     */
     public static void permissionLocationNear(AppCompatActivity content) {
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(content, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(content, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(content, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MapsActivity.MARKER_COARSE);
+            ActivityCompat.requestPermissions(content, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, VMapsActivity.MARKER_COARSE);
         }
     }
+
+    /**
+     * Get List of addresses using Geocoder using Bundle
+     * @param context
+     * @param bundle
+     * @return
+     */
     public static List<Address> getAddresses(Context context, Bundle bundle) {
         try {
-            double latitude  = Double.parseDouble(String.valueOf(bundle.get(MapsActivity.LATITUDE)));
-            double longitude = Double.parseDouble(String.valueOf(bundle.get(MapsActivity.LONGITUDE)));
+            double latitude = Double.parseDouble(String.valueOf(bundle.get(VMapsActivity.LATITUDE)));
+            double longitude = Double.parseDouble(String.valueOf(bundle.get(VMapsActivity.LONGITUDE)));
             Geocoder geo = new Geocoder(context.getApplicationContext(), Locale.getDefault());
             return  geo.getFromLocation(latitude, longitude, 1);
         } catch (IOException e) {
@@ -73,6 +104,12 @@ public class MapsUtil {
         return null;
     }
 
+    /**
+     * Get List of addresses using Geocoder using LatLng
+     * @param context
+     * @param latLng
+     * @return
+     */
     public static List<Address> getAddresses(Context context, LatLng latLng) {
         try {
             if(latLng == null || context == null){
@@ -88,12 +125,23 @@ public class MapsUtil {
         return null;
     }
 
+    /**
+     * return Object Latitude e Longitude
+     * @param bundle
+     * @return
+     */
     public static LatLng getLatLgn(Bundle bundle) {
-        double latitude  = Double.parseDouble(String.valueOf(bundle.get(MapsActivity.LATITUDE)));
-        double longitude = Double.parseDouble(String.valueOf(bundle.get(MapsActivity.LONGITUDE)));
+        double latitude = Double.parseDouble(String.valueOf(bundle.get(VMapsActivity.LATITUDE)));
+        double longitude = Double.parseDouble(String.valueOf(bundle.get(VMapsActivity.LONGITUDE)));
         return  new LatLng(latitude,longitude);
     }
 
+
+    /**
+     * Verify connection avaiable
+     * @param context
+     * @return
+     */
     static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();

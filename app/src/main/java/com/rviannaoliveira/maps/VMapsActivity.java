@@ -39,7 +39,7 @@ import java.util.Locale;
 /**
  * Criado por rodrigo on 30/07/16.
  */
-public class MapsActivity extends FragmentActivity implements MapsView,OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class VMapsActivity extends FragmentActivity implements VMapsView, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public static final LatLng SAO_PAULO = new LatLng(-23.586950299999998, -46.682218999999996);
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
@@ -50,10 +50,10 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
     private Geocoder geo;
     private GoogleMap map;
     private AutoCompleteTextView autocompleteView;
-    private PlaceAutocompleteAdapter adapter;
+    private VPlaceAutocompleteAdapter adapter;
     private Marker marker;
-    private ViewEventHelper viewEventHelper;
-    private MapsPresenter presenter;
+    private VViewEventHelper viewEventHelper;
+    private VMapsPresenter presenter;
     private ProgressBar progressBar;
     private Bundle bundle;
 
@@ -63,17 +63,17 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
         setContentView(R.layout.activity_maps);
         progressBar = (ProgressBar) this.findViewById(R.id.progressbar_maps_lib);
 
-        if(!MapsUtil.isNetworkAvailable(this)){
+        if (!VMapsUtil.isNetworkAvailable(this)) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(this, R.string.error_connection, Toast.LENGTH_SHORT).show();
             return;
         }
 
         bundle = getIntent().getExtras();
-        presenter = new MapsPresenterImpl(this);
-        viewEventHelper = new ViewEventHelper(this);
+        presenter = new VMapsPresenterImpl(this);
+        viewEventHelper = new VViewEventHelper(this);
         presenter.setup();
-        MapsUtil.permissionLocationNear(this);
+        VMapsUtil.permissionLocationNear(this);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        MapsEventHelper mapsHelper = new MapsEventHelper(this, googleMap);
+        VMapsEventHelper mapsHelper = new VMapsEventHelper(this, googleMap);
         map = googleMap;
         map.setOnInfoWindowClickListener(mapsHelper.eventSaveMarker);
         map.setOnMapLongClickListener(mapsHelper.eventOnLongClick);
@@ -131,7 +131,7 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
             autocompleteView.setText(bundle.getString(ADDRESS_STRING));
         }
 
-        adapter = new PlaceAutocompleteAdapter(this, googleApiClient, null, null);
+        adapter = new VPlaceAutocompleteAdapter(this, googleApiClient, null, null);
         autocompleteView.setAdapter(adapter);
         Button clearButton = (Button) this.findViewById(R.id.button_clear);
         Button save        = (Button) this.findViewById(R.id.confirm_local_place);
@@ -178,8 +178,8 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
         try {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngCurrent,nvlZoom));
             List<Address> addresses = geo.getFromLocation(latLngCurrent.latitude, latLngCurrent.longitude, 1);
-            marker.setTitle(MapsUtil.formatLocalityAutoComplete(addresses.get(0).getLocality(), addresses.get(0).getSubLocality()));
-            marker.setSnippet(MapsUtil.formatAddressAutoComplete(addresses.get(0).getThoroughfare(), addresses.get(0).getSubThoroughfare()));
+            marker.setTitle(VMapsUtil.formatLocalityAutoComplete(addresses.get(0).getLocality(), addresses.get(0).getSubLocality()));
+            marker.setSnippet(VMapsUtil.formatAddressAutoComplete(addresses.get(0).getThoroughfare(), addresses.get(0).getSubThoroughfare()));
             marker.showInfoWindow();
         } catch (IOException e) {
             Log.i(TAG,e.getMessage());
@@ -196,8 +196,8 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
 
     private void markerDefault() {
         if (bundle == null) {
-            marker = map.addMarker(new MarkerOptions().position(MapsActivity.SAO_PAULO).draggable(true));
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(MapsActivity.SAO_PAULO, this.getResources().getInteger(R.integer.nvl_zoom_start)));
+            marker = map.addMarker(new MarkerOptions().position(VMapsActivity.SAO_PAULO).draggable(true));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(VMapsActivity.SAO_PAULO, this.getResources().getInteger(R.integer.nvl_zoom_start)));
         }
     }
 
@@ -270,8 +270,8 @@ public class MapsActivity extends FragmentActivity implements MapsView,OnMapRead
             Toast.makeText(this, this.getString(R.string.error_connection), Toast.LENGTH_SHORT).show();
             return;
         }
-        bundle.putString(MapsActivity.LATITUDE, String.valueOf(marker.getPosition().latitude));
-        bundle.putString(MapsActivity.LONGITUDE, String.valueOf(marker.getPosition().longitude));
+        bundle.putString(VMapsActivity.LATITUDE, String.valueOf(marker.getPosition().latitude));
+        bundle.putString(VMapsActivity.LONGITUDE, String.valueOf(marker.getPosition().longitude));
         intent.putExtras(bundle);
         this.setResult(Activity.RESULT_OK, intent);
         this.finish();

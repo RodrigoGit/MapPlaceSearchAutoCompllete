@@ -6,7 +6,7 @@ import android.location.Location;
  * Criado por rodrigo on 29/01/17.
  */
 
-interface MapsPresenter {
+interface VMapsPresenter {
     void setup();
     void setupMarker(Location location);
 }

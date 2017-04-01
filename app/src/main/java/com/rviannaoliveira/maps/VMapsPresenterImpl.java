@@ -6,11 +6,11 @@ import android.location.Location;
  * Criado por rodrigo on 29/01/17.
  */
 
-class MapsPresenterImpl implements MapsPresenter {
+class VMapsPresenterImpl implements VMapsPresenter {
 
-    private MapsView mapsView;
+    private VMapsView mapsView;
 
-    MapsPresenterImpl(MapsView mapView){
+    VMapsPresenterImpl(VMapsView mapView) {
         this.mapsView = mapView;
     }
 

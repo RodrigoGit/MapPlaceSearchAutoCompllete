@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng;
  * Criado por rodrigo on 29/01/17.
  */
 
-interface MapsView {
+interface VMapsView {
     void setupMap();
     void setupView();
     void createMapDefault();
