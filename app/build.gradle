@@ -19,18 +19,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    uploadArchives {
-//        repositories {
-//            mavenDeployer {
-//                repository(url: "file:///Users/rodrigo/rep/gradleLibray/map")
-//
-//                pom.groupId = GROUP
-//                pom.artifactId = POM_ARTIFACT_ID
-//                pom.version = VERSION_NAME
-//            }
-//        }
-//    }
-//    task install(dependsOn: uploadArchives)
 }
 
 dependencies {
