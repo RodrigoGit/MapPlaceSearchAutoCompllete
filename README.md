@@ -3,7 +3,7 @@ Library to facilitate and expedite the implementation of maps in your project
 ## **Requirements**
 The libray requires Android **API level 15+.**
 
-## **Demo**
+## **Screenshots**
 <img src="https://github.com/rviannaoliveira/VMap/blob/master/images/first.png" width="360" height="600">
 <img src="https://github.com/rviannaoliveira/VMap/blob/master/images/second.png" width="360" height="600">
 
