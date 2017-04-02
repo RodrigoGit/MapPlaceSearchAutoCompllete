@@ -1,11 +1,16 @@
-# **VMAP**
+ # **VMAP**
 Library to facilitate and expedite the implementation of maps in your project
 ## **Requirements**
 The libray requires Android **API level 15+.**
 
-## **Screenshots**
+## **ScreenShot**
 <img src="https://github.com/rviannaoliveira/VMap/blob/master/images/first.png" width="360" height="600">
 <img src="https://github.com/rviannaoliveira/VMap/blob/master/images/second.png" width="360" height="600">
+
+## **Features**
+* Zoom
+* Current Location
+* AutoComplete using Google Places SDK
 
 ## **Installation**
 Step 1. Add it in your root build.gradle at the end of repositories:
