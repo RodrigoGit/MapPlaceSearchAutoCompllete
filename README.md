@@ -42,13 +42,13 @@ private final int RESULT_MAP = 1234;
 ```
 and add it as you call a Activity or Fragment
 ```java
-Intent intent = new Intent(context, MapsActivity.class);
+Intent map = new Intent(context, VMapsActivity.class);
 ```
 or you can pass latitude and longitude to open with marker already
 
 ```java
-map.putExtra(MapsActivity.LATITUDE, latLng.latitude);
-map.putExtra(MapsActivity.LONGITUDE, latLng.longitude);
+map.putExtra(VMapsActivity.LATITUDE, latLng.latitude);
+map.putExtra(VMapsActivity.LONGITUDE, latLng.longitude);
 ```
 then you need to call Activity or Fragment with result
 
@@ -63,7 +63,7 @@ then you will receive the LatLng
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
   super.onActivityResult(requestCode, resultCode, data);
     if (RESULT_MAP == requestCode && resultCode == Activity.RESULT_OK) {
-       LatLng latLng = MapsUtil.getLatLgn(data.getExtras());
+       LatLng latLng = VMapsUtil.getLatLgn(data.getExtras());
     }
 }
 ```
@@ -72,11 +72,11 @@ Inside of library there are some utils that you can use
 
 **get List of Address**
 ```java
-List<Address> addresses = MapsUtil.getAddresses(context, latLng);
+List<Address> addresses = VMapsUtil.getAddresses(context, latLng);
 ```
 or you can take the address with **formatting**
 ```java
-String addressComplete = MapsUtil.formatAddressAutoComplete(addresses.get(0).getThoroughfare(), addresses.get(0).getSubThoroughfare());
+String addressComplete = VMapsUtil.formatAddressAutoComplete(addresses.get(0).getThoroughfare(), addresses.get(0).getSubThoroughfare());
 ```
 
 ## **Applications that use this library**
