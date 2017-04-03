@@ -5,8 +5,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/rviannaoliveira/VMap.svg)](https://github.com/rviannaoliveira/VMap/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/rviannaoliveira/VMap.svg)](https://github.com/rviannaoliveira/VMap/issues)
 
-Library to facilitate and expedite the implementation of maps in your project
-## **Requirements**
+Easy library to speed up the use of maps## **Requirements**
 The libray requires Android **API level 15+.**
 
 ## **ScreenShot**
@@ -40,11 +39,11 @@ Declare a variable in Activity or Fragment to get later
 ```java
 private final int RESULT_MAP = 1234;
 ```
-and add it as you call a Activity or Fragment
+and add the following when you call a Activity or Fragment
 ```java
 Intent map = new Intent(context, VMapsActivity.class);
 ```
-or you can pass latitude and longitude to open with marker already
+or you can set latitude and longitude to open already with marker
 
 ```java
 map.putExtra(VMapsActivity.LATITUDE, latLng.latitude);
@@ -68,7 +67,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 ## **Tools**
-Inside of library there are some utils that you can use
+Inside of library there are some utils methods that you can use
 
 **get List of Address**
 ```java
