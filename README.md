@@ -23,7 +23,7 @@ Step 1. Add it in your root build.gradle at the end of repositories:
 ```gradle
 allprojects {
     repositories {
-       url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io' }
     }
 }
 ```
@@ -37,7 +37,7 @@ dependencies {
 ## **Usage**
 Declare a variable in Activity or Fragment to get later
 ```java
-private final int RESULT_MAP = 1234;
+private static final int RESULT_MAP = 1234;
 ```
 and add the following when you call a Activity or Fragment
 ```java
