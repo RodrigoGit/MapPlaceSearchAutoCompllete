@@ -1,4 +1,10 @@
  # **VMAP**
+
+[![Twitter: @rviannna](https://img.shields.io/twitter/url/https/github.com/rviannaoliveira/VMap.svg?style=social)](https://twitter.com/rviannna)
+[![GitHub forks](https://img.shields.io/github/forks/rviannaoliveira/VMap.svg)](https://github.com/rviannaoliveira/VMap/network)
+[![GitHub stars](https://img.shields.io/github/stars/rviannaoliveira/VMap.svg)](https://github.com/rviannaoliveira/VMap/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/rviannaoliveira/VMap.svg)](https://github.com/rviannaoliveira/VMap/issues)
+
 Library to facilitate and expedite the implementation of maps in your project
 ## **Requirements**
 The libray requires Android **API level 15+.**
