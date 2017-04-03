@@ -5,7 +5,8 @@
 [![GitHub stars](https://img.shields.io/github/stars/rviannaoliveira/VMap.svg)](https://github.com/rviannaoliveira/VMap/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/rviannaoliveira/VMap.svg)](https://github.com/rviannaoliveira/VMap/issues)
 
-Easy library to speed up the use of maps## **Requirements**
+Easy library to speed up the use of maps
+## **Requirements**
 The libray requires Android **API level 15+.**
 
 ## **ScreenShot**
