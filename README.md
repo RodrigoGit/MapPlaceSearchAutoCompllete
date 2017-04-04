@@ -7,7 +7,7 @@
 
 Easy library to speed up the use of maps
 ## **Requirements**
-* The libray requires Android **API level 15+.
+* The libray requires Android API level 15+.
 * Create API Key of Google -> https://developers.google.com/maps/documentation/android-api/signup
 
 
