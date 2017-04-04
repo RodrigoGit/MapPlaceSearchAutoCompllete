@@ -7,7 +7,9 @@
 
 Easy library to speed up the use of maps
 ## **Requirements**
-The libray requires Android **API level 15+.**
+* The libray requires Android **API level 15+.
+* Create API Key of Google -> https://developers.google.com/maps/documentation/android-api/signup
+
 
 ## **ScreenShot**
 <img src="https://github.com/rviannaoliveira/VMap/blob/master/images/first.png" width="360" height="600">
@@ -31,11 +33,23 @@ allprojects {
 Step 2. Add the dependency
 ```gradle
 dependencies {
-    compile 'com.github.rviannaoliveira:VMap:v1.0'
+    compile 'com.github.rviannaoliveira:VMap:1.0'
 }
 ```
 
 ## **Usage**
+In ```AndroidManifest.xml```, add the following element as a child of the ```<application>``` element, by inserting it just before the closing ```</application>```
+```gradle
+<activity
+    android:name="com.rviannaoliveira.maps.VMapsActivity"
+    android:windowSoftInputMode="adjustResize"/>
+```
+and in ```AndroidManifest.xml```, add the following permissions as a child of the ```<manifest>```
+```gradle
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!--Allows an app to access approximate location.-->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!--Allows an app to access precise location.-->
+<uses-permission android:name="android.permission.INTERNET"/>
+```
 Declare a variable in Activity or Fragment to get later
 ```java
 private static final int RESULT_MAP = 1234;
