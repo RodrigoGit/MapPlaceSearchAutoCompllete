@@ -57,6 +57,7 @@ private static final int RESULT_MAP = 1234;
 and add the following when you call a Activity or Fragment
 ```java
 Intent map = new Intent(context, VMapsActivity.class);
+this.startActivity(map); //Activity 
 ```
 or you can set latitude and longitude to open already with marker
 
